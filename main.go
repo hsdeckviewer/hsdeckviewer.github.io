@@ -1,4 +1,4 @@
-package hsdeckstring
+package main
 
 import (
 	"bytes"
