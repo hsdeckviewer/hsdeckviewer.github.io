@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"os"
 
 	"github.com/gorilla/mux"
 )
@@ -33,9 +34,13 @@ type Deck struct {
 
 // our main function
 func main() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		log.Fatal("$PORT must be set")
+	}
 	router := mux.NewRouter()
 	router.HandleFunc("/decks/", GetDeckFromString).Methods("GET")
-	log.Fatal(http.ListenAndServe(":8000", router))
+	log.Fatal(http.ListenAndServe(":"+port, router))
 }
 
 func GetDeckFromString(w http.ResponseWriter, r *http.Request) {
