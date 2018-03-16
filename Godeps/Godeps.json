@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/oliverfei/HearthstoneMultiDeckViewer/hsdeckstring",
+	"ImportPath": "github.com/oliverfei/HearthstoneMultiDeckViewer",
 	"GoVersion": "go1.10",
 	"GodepVersion": "v80",
 	"Deps": [
