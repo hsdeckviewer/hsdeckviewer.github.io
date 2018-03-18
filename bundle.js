@@ -318,7 +318,7 @@ $(function(){
 });
 
 function updateURL() {
-    history.replaceState({},"","/?deckstring=" + deckstringList.join("&deckstring="));
+    history.replaceState({},"","/?deckstring=" + encodeURIComponent(deckstringList.join("&deckstring=")));
 }
 
 function createDeckFromString(deckstring) {
