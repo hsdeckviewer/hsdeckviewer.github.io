@@ -1,0 +1,40 @@
+.title-container {
+    text-align: center;
+    padding: 50px;
+}
+
+.form-container {
+    text-align: center;
+}
+
+.deck-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.deck {
+    padding: 10px;
+}
+
+.hs-card {
+    display: flex;
+}
+
+.card-cost {
+    width: 15px;
+}
+
+.card-text {
+    width: 180px;
+}
+
+.card-number {
+    width: 15px;
+    text-align: right;
+}
+
+footer {
+    width: 100%;
+    padding: 25px;
+}

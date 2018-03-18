@@ -1,0 +1,20 @@
+{
+  "name": "Hearthstone Deck Viewer",
+  "version": "0.0.1",
+  "description": "A simple tool to decode and display Hearthstone deckstrings",
+  "keywords": [
+    "hearthstone",
+    "deckstrings"
+  ],
+  "repository": "https://github.com/oliverfei/HearthstoneMultiDeckViewer/",
+  "homepage": "https://hsdeckviewer.com",
+  "author": "Oliver Fei",
+  "dependencies": {
+    "browserify": "^16.1.1",
+    "deckstrings": "^2.0.0"
+  },
+  "main": "index",
+  "scripts": {
+    "makebundle": "browserify scripts.js -o bundle.js"
+  }
+}
