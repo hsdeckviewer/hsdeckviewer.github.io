@@ -295,18 +295,18 @@ var deckstringList = [];
 
 $(function(){
     $.getJSON('https://api.hearthstonejson.com/v1/latest/enUS/cards.json', function(data) {
-        console.log(data);
         data.forEach(function(card) {
             cards[card["dbfId"]] = card;
         });
-        console.log(cards);
+
+        var urlParams = new URLSearchParams(window.location.search);
+        var decks = urlParams.getAll('deckstring');
+        decks.forEach(function(deck) {
+            createDeckFromString(decodeURIComponent(deck));
+        });
     });
 
-    var urlParams = new URLSearchParams(window.location.search);
-    var decks = urlParams.getAll('deckstring');
-    decks.forEach(function(deck) {
-        createDeckFromString(decodeURIComponent(deck));
-    });
+
 
     $("#deckstringForm").submit(function(e){
         e.preventDefault();
