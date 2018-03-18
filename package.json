@@ -1,5 +1,5 @@
 {
-  "name": "Hearthstone Deck Viewer",
+  "name": "hsdeckviewer",
   "version": "0.0.1",
   "description": "A simple tool to decode and display Hearthstone deckstrings",
   "keywords": [
@@ -10,7 +10,6 @@
   "homepage": "https://hsdeckviewer.com",
   "author": "Oliver Fei",
   "dependencies": {
-    "browserify": "^16.1.1",
     "deckstrings": "^2.0.0"
   },
   "main": "index",

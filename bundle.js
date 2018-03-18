@@ -291,6 +291,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 },{}],2:[function(require,module,exports){
 var deckstrings = require("deckstrings");
 var cards = {}
+var deckstringList = [];
 
 $(function(){
     $.getJSON('https://api.hearthstonejson.com/v1/latest/enUS/cards.json', function(data) {
@@ -300,14 +301,33 @@ $(function(){
         });
         console.log(cards);
     });
+
+    var urlParams = new URLSearchParams(window.location.search);
+    var decks = urlParams.getAll('deckstring');
+    decks.forEach(function(deck) {
+        createDeckFromString(deck);
+    });
+
     $("#deckstringForm").submit(function(e){
         e.preventDefault();
-        var deck = deckstrings.decode($("#deckstring").val());
-        console.log(deck);
-        var deckElement = createDeckElement(deck.heroes[0], deck.cards);
-        $("#decks")[0].appendChild(deckElement);
+        var deckstring = $("#deckstring").val().split(/\s+/);
+        deckstring.forEach(function(deck){
+            createDeckFromString(deck);
+        });
     });
 });
+
+function updateURL() {
+    history.replaceState({},"","/?deckstring=" + deckstringList.join("&deckstring="));
+}
+
+function createDeckFromString(deckstring) {
+    var deck = deckstrings.decode(deckstring);
+    deckstringList.push(deckstring);
+    var deckElement = createDeckElement(deck.heroes[0], deck.cards);
+    $("#decks")[0].appendChild(deckElement);
+    updateURL();
+}
 
 function createDeckElement(hero, cardlist) {
     var deckContainer = document.createElement("div");
