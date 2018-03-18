@@ -305,7 +305,7 @@ $(function(){
     var urlParams = new URLSearchParams(window.location.search);
     var decks = urlParams.getAll('deckstring');
     decks.forEach(function(deck) {
-        createDeckFromString(decodeUriComponent(deck));
+        createDeckFromString(decodeURIComponent(deck));
     });
 
     $("#deckstringForm").submit(function(e){
