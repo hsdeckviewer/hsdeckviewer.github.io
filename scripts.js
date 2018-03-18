@@ -27,12 +27,12 @@ $(function(){
 });
 
 function updateURL() {
-    history.replaceState({},"","/?deckstring=" + encodeURIComponent(deckstringList.join("&deckstring=")));
+    history.replaceState({},"","/?deckstring=" + deckstringList.join("&deckstring="));
 }
 
 function createDeckFromString(deckstring) {
     var deck = deckstrings.decode(deckstring);
-    deckstringList.push(deckstring);
+    deckstringList.push(encodeURIComponent(deckstring));
     var deckElement = createDeckElement(deck.heroes[0], deck.cards);
     $("#decks")[0].appendChild(deckElement);
     updateURL();
