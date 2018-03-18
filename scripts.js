@@ -14,7 +14,7 @@ $(function(){
     var urlParams = new URLSearchParams(window.location.search);
     var decks = urlParams.getAll('deckstring');
     decks.forEach(function(deck) {
-        createDeckFromString(deck);
+        createDeckFromString(decodeUriComponent(deck));
     });
 
     $("#deckstringForm").submit(function(e){
