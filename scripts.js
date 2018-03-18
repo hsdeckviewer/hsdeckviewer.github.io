@@ -23,6 +23,7 @@ $(function(){
         deckstring.forEach(function(deck){
             createDeckFromString(deck);
         });
+        $("#deckstring").val("");
     });
 });
 
