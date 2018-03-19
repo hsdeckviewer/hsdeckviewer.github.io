@@ -70,6 +70,13 @@ function createDeckElement(hero, cardlist, deckstring) {
     titleContainer.classList.add("deck-title");
     titleContainer.appendChild(document.createTextNode(cards[hero].cardClass + " Deck"))
     
+    var copyButton = document.createElement("button");
+    copyButton.classList.add("btn");
+    copyButton.classList.add("btn-sm");
+    copyButton.classList.add("btn-block");
+    copyButton.setAttribute("data-clipboard-text", deckstring);
+    copyButton.appendChild(document.createTextNode("Copy Deckcode"));
+
     var removeButton = document.createElement("button");
     removeButton.classList.add("btn");
     removeButton.classList.add("btn-sm");
