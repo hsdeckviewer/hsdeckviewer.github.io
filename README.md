@@ -7,8 +7,10 @@ Development Setup
 -----------------
 Clone/download the repo and navigate to the project folder.
 
-Install browserify: <npm install browserify -g>
-Install http-server: <npm install http-server -g>
-Install dependancies:  <npm install>
+Install browserify: `<npm install browserify -g>`
 
-Run <npm run build> to build bundle.js from the scripts.js file and start http-server
+Install http-server: `<npm install http-server -g>`
+
+Install dependancies: `<npm install>`
+
+Run `<npm run build>` to build bundle.js from the scripts.js file and start http-server
