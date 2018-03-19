@@ -1,5 +1,5 @@
 var deckstrings = require("deckstrings");
-var cards = {}
+var cards = {};
 var deckstringList = [];
 var URL_SHORTENER_KEY = "AIzaSyCrJtSoZVc42qqULzkefuxyZckc3CEJ598";
 
@@ -57,12 +57,12 @@ function updateURL() {
 function createDeckFromString(deckstring) {
     var deck = deckstrings.decode(deckstring);
     deckstringList.push(encodeURIComponent(deckstring));
-    var deckElement = createDeckElement(deck.heroes[0], deck.cards);
+    var deckElement = createDeckElement(deck.heroes[0], deck.cards, deckstring);
     $("#decks")[0].appendChild(deckElement);
     updateURL();
 }
 
-function createDeckElement(hero, cardlist) {
+function createDeckElement(hero, cardlist, deckstring) {
     var deckContainer = document.createElement("div");
     deckContainer.classList.add("deck");
 
@@ -77,6 +77,8 @@ function createDeckElement(hero, cardlist) {
     removeButton.appendChild(document.createTextNode("Remove Deck"));
     removeButton.addEventListener("click", function(){
         deckContainer.parentNode.removeChild(deckContainer);
+        deckstringList.splice(deckstringList.indexOf(encodeURIComponent(deckstring)),1);
+        updateURL();
     })
 
     var cardsContainer = document.createElement("div");
