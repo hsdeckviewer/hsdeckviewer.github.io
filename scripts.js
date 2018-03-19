@@ -1,7 +1,7 @@
 var deckstrings = require("deckstrings");
 var cards = {}
 var deckstringList = [];
-var URL_SHORTENER_KEY = "AIzaSyA7Z4uvsIz_m6k4Uu4kT-DdutJim76Lxzg";
+var URL_SHORTENER_KEY = "AIzaSyCrJtSoZVc42qqULzkefuxyZckc3CEJ598";
 
 $(function(){
     $.getJSON('https://api.hearthstonejson.com/v1/latest/enUS/cards.json', function(data) {
@@ -18,9 +18,16 @@ $(function(){
 
     $("#urlShortenerForm").submit(function(e){
         e.preventDefault();
-        $.post("https://www.googleapis.com/urlshortener/v1/url/?key=" + URL_SHORTENER_KEY, {"longURL": location.href}, function(data){
-            $("#urlInput").val(data.id);
-        }, "json")
+        $.ajax({
+            url: "https://www.googleapis.com/urlshortener/v1/url?key=" + URL_SHORTENER_KEY,
+            type: "POST",
+            data: JSON.stringify({"longUrl": location.href}),
+            contentType:"application/json; charset=utf-8",
+            dataType:"json",
+            success: function(result){
+                $("#urlInput").val(result.id);
+            }
+        });
     });
 
     $("#deckstringForm").submit(function(e){
