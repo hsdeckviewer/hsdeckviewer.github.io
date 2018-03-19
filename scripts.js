@@ -70,6 +70,15 @@ function createDeckElement(hero, cardlist) {
     titleContainer.classList.add("deck-title");
     titleContainer.appendChild(document.createTextNode(cards[hero].cardClass + " Deck"))
     
+    var removeButton = document.createElement("button");
+    removeButton.classList.add("btn");
+    removeButton.classList.add("btn-sm");
+    removeButton.classList.add("btn-block");
+    removeButton.appendChild(document.createTextNode("Remove Deck"));
+    removeButton.addEventListener("click", function(){
+        deckContainer.parentNode.removeChild(deckContainer);
+    })
+
     var cardsContainer = document.createElement("div");
     cardsContainer.classList.add("deck-cards");
 
@@ -104,6 +113,7 @@ function createDeckElement(hero, cardlist) {
         cardsContainer.appendChild(cardContainer);
     });
     deckContainer.appendChild(titleContainer);
+    deckContainer.appendChild(removeButton);
     deckContainer.appendChild(cardsContainer);
     return deckContainer;
 }
