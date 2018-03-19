@@ -307,6 +307,12 @@ $(function(){
         });
     });
 
+    $("#removeButton").click(function(e){
+        $(".deck").remove();
+        deckstringList = [];
+        updateURL();
+    });
+
     $("#urlShortenerForm").submit(function(e){
         e.preventDefault();
         $.ajax({
@@ -332,7 +338,10 @@ $(function(){
 });
 
 function updateURL() {
-    var updatedURL = "/?deckstring=" + deckstringList.join("&deckstring=");
+    var updatedURL = "/";
+    if(deckstringList.length > 0){
+        updatedURL = "/?deckstring=" + deckstringList.join("&deckstring=");
+    }
     history.replaceState({},"", updatedURL);
 }
 
