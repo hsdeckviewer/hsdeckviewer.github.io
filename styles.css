@@ -1,5 +1,15 @@
+.clippy {
+    position: relative;
+    margin-bottom: 3px;
+}
+
 .container {
     padding-top: 10px;
+}
+
+.copy-button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
 
 .title-container {
@@ -41,4 +51,8 @@
 footer {
     width: 100%;
     padding: 25px;
+}
+
+#shortURLGroup {
+    max-width: 400px;
 }

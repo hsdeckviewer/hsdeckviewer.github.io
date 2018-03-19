@@ -2,8 +2,11 @@ var deckstrings = require("deckstrings");
 var cards = {};
 var deckstringList = [];
 var URL_SHORTENER_KEY = "AIzaSyCrJtSoZVc42qqULzkefuxyZckc3CEJ598";
+var clipboard;
 
 $(function(){
+    clipboard = new ClipboardJS('.btn');
+
     $.getJSON('https://api.hearthstonejson.com/v1/latest/enUS/cards.json', function(data) {
         data.forEach(function(card) {
             cards[card["dbfId"]] = card;
@@ -16,14 +19,21 @@ $(function(){
         });
     });
 
+    $("#copyButton").tooltip({
+        title: "Copied",
+        trigger: "click"
+    });
+    $("#copyButton").on("mouseout", function(){
+        $(this).tooltip("hide");
+    });
+
     $("#removeButton").click(function(e){
         $(".deck").remove();
         deckstringList = [];
         updateURL();
     });
 
-    $("#urlShortenerForm").submit(function(e){
-        e.preventDefault();
+    $("#urlButton").click(function(){
         $.ajax({
             url: "https://www.googleapis.com/urlshortener/v1/url?key=" + URL_SHORTENER_KEY,
             type: "POST",
@@ -75,7 +85,17 @@ function createDeckElement(hero, cardlist, deckstring) {
     copyButton.classList.add("btn-sm");
     copyButton.classList.add("btn-block");
     copyButton.setAttribute("data-clipboard-text", deckstring);
+    copyButton.setAttribute("data-toggle","tooltip");
+    copyButton.setAttribute("title","Copied!");
     copyButton.appendChild(document.createTextNode("Copy Deckcode"));
+    $(copyButton).tooltip({
+        title: "Copied",
+        trigger: "click"
+    });
+    copyButton.addEventListener("mouseout", function(){
+        $(copyButton).tooltip("hide");
+    });
+    var clipboard = new ClipboardJS(copyButton);
 
     var removeButton = document.createElement("button");
     removeButton.classList.add("btn");
@@ -122,6 +142,7 @@ function createDeckElement(hero, cardlist, deckstring) {
         cardsContainer.appendChild(cardContainer);
     });
     deckContainer.appendChild(titleContainer);
+    deckContainer.appendChild(copyButton);
     deckContainer.appendChild(removeButton);
     deckContainer.appendChild(cardsContainer);
     return deckContainer;

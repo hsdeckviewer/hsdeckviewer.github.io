@@ -14,6 +14,6 @@
   },
   "main": "index",
   "scripts": {
-    "build": "browserify scripts.js -o bundle.js && http-server"
+    "build": "browserify scripts/scripts.js -o scripts/bundle.js && http-server"
   }
 }
