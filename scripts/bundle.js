@@ -324,6 +324,10 @@ $(function(){
         update();
     });
 
+    $("#addButton").click(function(){
+        var deckText = window.clip
+    });
+
     $("#urlButton").click(function(){
         $.ajax({
             url: "https://www.googleapis.com/urlshortener/v1/url?key=" + URL_SHORTENER_KEY,
@@ -337,15 +341,38 @@ $(function(){
         });
     });
 
-    $("#deckstringForm").submit(function(e){
-        e.preventDefault();
-        var deckstring = $("#deckstring").val().split(/\s+/);
-        deckstring.forEach(function(deck){
-            createDeckFromString(deck);
-        });
-        $("#deckstring").val("");
+    $("#addButton").on("click", addInputedDecks);
+    $("#deckstring").on("paste", function(e){
+        if ($("#deckstring").val().indexOf("deck in Hearthstone") != -1) {
+            var deckcode = parseDeckcodeFromString($("#deckstring").val());
+            $("#deckstring").val(deckcode);
+        }
+    });
+    $("#deckstring").on("keyup", function(e){
+        $("#addButton").prop("disabled", $("#deckstring").val() == "");
+        if(e.keyCode === KeyboardEvent.DOM_VK_RETURN) {
+            addInputedDecks();
+            $("#addButton").prop("disabled", true);
+        }
     });
 });
+
+function parseDeckcodeFromString(deckstring) {
+    var strings = deckstring.split("#");
+    return strings[strings.length - 3].trim();
+}
+
+function addInputedDecks() {
+    if ($("#deckstring").val().indexOf("deck in Hearthstone") != -1) {
+        var deckcode = parseDeckcodeFromString($("#deckstring").val());
+        $("#deckstring").val(deckcode);
+    }
+    var deckstring = $("#deckstring").val().split(/\s+/);
+    deckstring.forEach(function(deck){
+        createDeckFromString(deck);
+    });
+    $("#deckstring").val("");
+}
 
 function update() {
     updateURL();
@@ -377,14 +404,19 @@ function createDeckFromString(deckstring) {
 
 function createDeckElement(hero, cardlist, deckstring) {
     var deckContainer = document.createElement("div");
+    deckContainer.classList.add(cards[hero].cardClass.toLowerCase());
     deckContainer.classList.add("deck");
 
     var titleContainer = document.createElement("div");
     titleContainer.classList.add("deck-title");
-    titleContainer.appendChild(document.createTextNode(cards[hero].cardClass + " Deck"))
+    titleContainer.appendChild(document.createTextNode(cards[hero].cardClass))
     
+    var buttonContainer = document.createElement("div");
+    buttonContainer.classList.add("deck-buttons");
+
     var copyButton = document.createElement("button");
     copyButton.classList.add("btn");
+    copyButton.classList.add("btn-outline-dark");
     copyButton.classList.add("btn-sm");
     copyButton.classList.add("btn-block");
     copyButton.setAttribute("data-clipboard-text", deckstring);
@@ -402,6 +434,7 @@ function createDeckElement(hero, cardlist, deckstring) {
 
     var removeButton = document.createElement("button");
     removeButton.classList.add("btn");
+    removeButton.classList.add("btn-outline-dark");
     removeButton.classList.add("btn-sm");
     removeButton.classList.add("btn-block");
     removeButton.appendChild(document.createTextNode("Remove Deck"));
@@ -410,6 +443,9 @@ function createDeckElement(hero, cardlist, deckstring) {
         deckstringList.splice(deckstringList.indexOf(encodeURIComponent(deckstring)),1);
         update();
     })
+
+    buttonContainer.appendChild(copyButton);
+    buttonContainer.appendChild(removeButton);
 
     var cardsContainer = document.createElement("div");
     cardsContainer.classList.add("deck-cards");
@@ -454,8 +490,7 @@ function createDeckElement(hero, cardlist, deckstring) {
         cardsContainer.appendChild(cardContainer);
     });
     deckContainer.appendChild(titleContainer);
-    deckContainer.appendChild(copyButton);
-    deckContainer.appendChild(removeButton);
+    deckContainer.appendChild(buttonContainer);
     deckContainer.appendChild(cardsContainer);
     return deckContainer;
 }

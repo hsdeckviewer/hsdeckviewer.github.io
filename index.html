@@ -24,20 +24,23 @@
                 </div>
             </div>
 
-            <form id="deckstringForm">
-                <div class="form-group">
-                    <input id="deckstring" name="deckstring" type="text" class="form-control" placeholder="Input deckstrings here (separate multiple deck strings with whitespace)">
+            <div id="deckstringForm" class="row">
+                <div class="input-group mb-2">
+                    <input id="deckstring" name="deckstring" type="text" class="form-control" placeholder="Input deck code(s) here">
+                    <div class="input-group-append">
+                        <button disabled id="addButton" class="btn btn-outline-dark" data-clipboard-target="#urlInput">Add Decks</button>
+                    </div>
                 </div>
-            </form>
+            </div>
 
             <div class="row">
                 <div class="input-group mx-auto" id="shortURLGroup">
                     <div class="input-group-prepend">
-                        <button disabled id="urlButton" class="btn btn-outline-secondary">Generate Short URL</button>
+                        <button disabled id="urlButton" class="btn btn-outline-dark">Generate Short URL</button>
                     </div>
                     <input id="urlInput" readonly class="form-control" type="text" name="url">
                     <div class="input-group-append">
-                        <button disabled id="copyButton" class="btn btn-outline-secondary" data-clipboard-target="#urlInput">
+                        <button disabled id="copyButton" class="btn btn-outline-dark" data-clipboard-target="#urlInput">
                             <img class="clippy" src="images/clippy.svg" alt="Copy to clipboard" width="13">
                         </button>
                     </div>
@@ -46,7 +49,7 @@
 
             <div class="row">
                 <div class="container">
-                    <button disabled class="btn" id="removeButton">Remove All</button>
+                    <button disabled class="btn btn-outline-dark" id="removeButton">Remove All Decks</button>
                 </div>
                 <div id="decks" class="container deck-container">
                 </div>

@@ -1,3 +1,10 @@
+#deckstringForm {
+    padding: 10px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
 .clippy {
     position: relative;
     margin-bottom: 3px;
@@ -28,18 +35,61 @@
 }
 
 .deck {
-    padding: 10px;
-    border: 1px solid grey;
+    border: 1px solid;
     border-radius: 5px 5px 5px 5px;
     margin: 10px;
 }
+.deck-buttons {
+    padding: 10px;
+}
 
 .deck-cards {
-    padding-top: 10px;
+    padding: 10px;
 }
 
 .deck-title {
-    margin-bottom: 10px;
+    padding: 15px;
+    border-bottom: 1px solid;
+}
+
+/* .deck.paladin  {
+    border-color: #C3872D;
+}
+
+.deck.mage  {
+    border-color: #5C6E99;
+}
+
+.deck.priest  {
+    border-color: #B7B9BD;
+}
+
+.deck.hunter  {
+    border-color: #2C6D24;
+}
+
+.deck.warlock  {
+    border-color: #4E3456;
+}
+
+.deck.druid  {
+    border-color: #603829;
+}
+
+.deck.warrior  {
+    border-color: #712215;
+}
+
+.deck.rogue  {
+    border-color: #3B3C40;
+}
+
+.deck.shaman  {
+    border-color: #2E355E;
+} */
+
+.deck-cards {
+    padding: 10px;
 }
 
 .hs-card {
@@ -54,7 +104,11 @@
 }
 
 .card-cost {
-    width: 20px;
+    width: 25px;
+    background-image: url("/images/mana_crystal.png");
+    background-size: 25px 22.5px;
+    background-repeat: no-repeat;
+    background-position: right top 1px;
 }
 
 .card-container {
@@ -87,32 +141,4 @@ footer {
 
 #shortURLGroup {
     max-width: 400px;
-}
-
-.hex:before {
-    content: " ";
-    width: 0; height: 0;
-    border-bottom: 30px solid #0080ff;
-    border-left: 52px solid transparent;
-    border-right: 52px solid transparent;
-    position: absolute;
-    top: -30px;
-}
-
-.hex {
-    margin-top: 30px;
-    width: 104px;
-    height: 60px;
-    background-color: #0080ff;
-    position: relative;
-}
-
-.hex:after {
-    content: "";
-    width: 0;
-    position: absolute;
-    bottom: -30px;
-    border-top: 30px solid #0080ff;
-    border-left: 52px solid transparent;
-    border-right: 52px solid transparent;
 }
