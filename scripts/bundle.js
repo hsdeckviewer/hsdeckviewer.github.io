@@ -419,6 +419,7 @@ function createDeckElement(hero, cardlist, deckstring) {
         $(cardContainer).tooltip({
             html: true,
             placement: "right",
+            boundary: "viewport",
             animation: false,
             template: '<div class="tooltip card-tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner card-container"></div></div>'
         });

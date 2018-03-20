@@ -34,6 +34,14 @@
     margin: 10px;
 }
 
+.deck-cards {
+    padding-top: 10px;
+}
+
+.deck-title {
+    margin-bottom: 10px;
+}
+
 .hs-card {
     display: flex;
     padding: 5px;
@@ -70,7 +78,11 @@
 
 footer {
     width: 100%;
-    padding: 25px;
+    padding: 50px;
+}
+
+.row {
+    text-align: center;
 }
 
 #shortURLGroup {
