@@ -342,12 +342,7 @@ $(function(){
     });
 
     $("#addButton").on("click", addInputedDecks);
-    $("#deckstring").on("paste", function(e){
-        if ($("#deckstring").val().indexOf("deck in Hearthstone") != -1) {
-            var deckcode = parseDeckcodeFromString($("#deckstring").val());
-            $("#deckstring").val(deckcode);
-        }
-    });
+
     $("#deckstring").on("keyup", function(e){
         $("#addButton").prop("disabled", $("#deckstring").val() == "");
         if(e.keyCode === KeyboardEvent.DOM_VK_RETURN) {
@@ -422,7 +417,7 @@ function createDeckElement(hero, cardlist, deckstring) {
     copyButton.setAttribute("data-clipboard-text", deckstring);
     copyButton.setAttribute("data-toggle","tooltip");
     copyButton.setAttribute("title","Copied!");
-    copyButton.appendChild(document.createTextNode("Copy Deckcode"));
+    copyButton.appendChild(document.createTextNode("Copy Deck Code"));
     $(copyButton).tooltip({
         title: "Copied",
         trigger: "click"
