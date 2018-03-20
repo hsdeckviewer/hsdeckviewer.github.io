@@ -25,12 +25,15 @@
             </div>
 
             <div id="deckstringForm" class="row">
-                <div class="input-group mb-2">
+                <div class="input-group">
                     <input id="deckstring" name="deckstring" type="text" class="form-control" placeholder="Input deck code(s) here">
                     <div class="input-group-append">
-                        <button disabled id="addButton" class="btn btn-outline-dark" data-clipboard-target="#urlInput">Add Decks</button>
+                        <button disabled id="addButton" class="btn btn-outline-dark" data-clipboard-target="#urlInput">Add Deck(s)</button>
                     </div>
                 </div>
+                <small class="form-text text-muted mb-2">
+                    Separate multiple deck codes with whitespace. Individual deck strings copied from the game client are also supported.
+                </small>
             </div>
 
             <div class="row">
