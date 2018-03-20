@@ -321,7 +321,7 @@ $(function(){
     $("#removeButton").click(function(e){
         $(".deck").remove();
         deckstringList = [];
-        updateURL();
+        update();
     });
 
     $("#urlButton").click(function(){
@@ -347,6 +347,11 @@ $(function(){
     });
 });
 
+function update() {
+    updateURL();
+    updateButtonStates();
+}
+
 function updateURL() {
     var updatedURL = "/";
     if(deckstringList.length > 0){
@@ -355,12 +360,19 @@ function updateURL() {
     history.replaceState({},"", updatedURL);
 }
 
+function updateButtonStates() {
+    var isDisabled = deckstringList.length == 0;
+    $("#removeButton").prop('disabled', isDisabled);
+    $("#urlButton").prop('disabled', isDisabled);
+    $("#copyButton").prop('disabled', isDisabled);
+}
+
 function createDeckFromString(deckstring) {
     var deck = deckstrings.decode(deckstring);
     deckstringList.push(encodeURIComponent(deckstring));
     var deckElement = createDeckElement(deck.heroes[0], deck.cards, deckstring);
     $("#decks")[0].appendChild(deckElement);
-    updateURL();
+    update();
 }
 
 function createDeckElement(hero, cardlist, deckstring) {
@@ -396,7 +408,7 @@ function createDeckElement(hero, cardlist, deckstring) {
     removeButton.addEventListener("click", function(){
         deckContainer.parentNode.removeChild(deckContainer);
         deckstringList.splice(deckstringList.indexOf(encodeURIComponent(deckstring)),1);
-        updateURL();
+        update();
     })
 
     var cardsContainer = document.createElement("div");

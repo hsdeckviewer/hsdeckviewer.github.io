@@ -33,11 +33,11 @@
             <div class="row">
                 <div class="input-group mx-auto" id="shortURLGroup">
                     <div class="input-group-prepend">
-                        <button id="urlButton" class="btn btn-outline-secondary">Generate Short URL</button>
+                        <button disabled id="urlButton" class="btn btn-outline-secondary">Generate Short URL</button>
                     </div>
-                    <input id="urlInput" class="form-control" type="text" name="url">
+                    <input id="urlInput" readonly class="form-control" type="text" name="url">
                     <div class="input-group-append">
-                        <button id="copyButton" class="btn btn-outline-secondary" data-clipboard-target="#urlInput">
+                        <button disabled id="copyButton" class="btn btn-outline-secondary" data-clipboard-target="#urlInput">
                             <img class="clippy" src="images/clippy.svg" alt="Copy to clipboard" width="13">
                         </button>
                     </div>
@@ -46,7 +46,7 @@
 
             <div class="row">
                 <div class="container">
-                    <button class="btn" id="removeButton">Remove All</button>
+                    <button disabled class="btn" id="removeButton">Remove All</button>
                 </div>
                 <div id="decks" class="container deck-container">
                 </div>
