@@ -123,6 +123,14 @@ function createDeckElement(hero, cardlist, deckstring) {
     cardlist.forEach(function(card) {
         var cardContainer = document.createElement("div");
         cardContainer.classList.add("hs-card");
+        cardContainer.setAttribute("data-toggle", "tooltip");
+        cardContainer.setAttribute("title", "<img src='images/cards/" + card[0] + ".png'>");
+        $(cardContainer).tooltip({
+            html: true,
+            placement: "right",
+            animation: false,
+            template: '<div class="tooltip card-tooltip" role="tooltip"><div class="arrow"></div><div class="tooltip-inner card-container"></div></div>'
+        });
 
         var cardCost = document.createElement("div");
         cardCost.appendChild(document.createTextNode(cards[card[0]].cost));

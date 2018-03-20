@@ -29,14 +29,34 @@
 
 .deck {
     padding: 10px;
+    border: 1px solid grey;
+    border-radius: 5px 5px 5px 5px;
+    margin: 10px;
 }
 
 .hs-card {
     display: flex;
+    padding: 5px;
+}
+
+.hs-card:hover {
+    cursor: pointer;
+    border-bottom: 1px dashed grey;
+    border-top: 1px dashed grey;
 }
 
 .card-cost {
     width: 20px;
+}
+
+.card-container {
+    border-radius: 15px 15px 15px 15px;
+    max-width: 300px;
+    padding: 0 10px 20px 10px;
+}
+
+.tooltip.show {
+    opacity: 1;
 }
 
 .card-text {
