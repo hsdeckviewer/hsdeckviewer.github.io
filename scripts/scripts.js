@@ -71,7 +71,7 @@ function addInputedDecks() {
         var deckcode = parseDeckcodeFromString($("#deckstring").val());
         $("#deckstring").val(deckcode);
     }
-    var deckstring = $("#deckstring").val().split(/\s+/);
+    var deckstring = $("#deckstring").val().split(/,\s*|\s+/);
     deckstring.forEach(function(deck){
         createDeckFromString(deck);
     });
