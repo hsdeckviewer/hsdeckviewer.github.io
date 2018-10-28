@@ -20,10 +20,8 @@ body {
     justify-content: center;
     display: flex;
     align-items: center;
-}
-
-#deckstring {
-    width: 500px;
+    width: 80vw;
+    max-width: 800px;
 }
 
 .clippy {
