@@ -1,3 +1,20 @@
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#header-section {
+    padding: 50px;
+    background: rgb(22,26,58);
+    color: white;
+    display: flex;
+    flex: auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 #deckstringForm {
     padding: 10px;
     justify-content: center;
@@ -5,18 +22,22 @@
     align-items: center;
 }
 
+#deckstring {
+    width: 500px;
+}
+
 .clippy {
     position: relative;
     margin-bottom: 3px;
 }
 
-.container {
-    padding-top: 10px;
-}
-
 .copy-button {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+}
+
+.container {
+    padding-top: 10px;
 }
 
 .title-container {
@@ -35,21 +56,75 @@
 }
 
 .deck {
-    border: 1px solid;
-    border-radius: 5px 5px 5px 5px;
     margin: 10px;
 }
 .deck-buttons {
     padding: 10px;
+    border: 1px solid rgb(22,26,58);
+    border-radius: 0 0 5px 5px;
 }
 
 .deck-cards {
     padding: 10px;
 }
 
+.warrior > .deck-title {
+    background-image: url("/images/heroes/HERO_01.jpg");
+    background-position: right bottom 90px;
+}
+
+.shaman > .deck-title {
+    background-image: url("/images/heroes/HERO_02.jpg");
+    background-position: right bottom 90px;
+}
+
+.rogue > .deck-title {
+    background-image: url("/images/heroes/HERO_03.jpg");
+    background-position: right bottom 90px;
+}
+
+.paladin > .deck-title {
+    background-image: url("/images/heroes/HERO_04.jpg");
+    background-position: right bottom 90px;
+}
+
+.hunter > .deck-title {
+    background-image: url("/images/heroes/HERO_05.jpg");
+    background-position: right bottom 90px;
+}
+
+.druid > .deck-title {
+    background-image: url("/images/heroes/HERO_06.jpg");
+    background-position: right bottom 90px;
+}
+
+.warlock > .deck-title {
+    background-image: url("/images/heroes/HERO_07.jpg");
+    background-position: right bottom 90px;
+}
+
+.mage > .deck-title {
+    background-image: url("/images/heroes/HERO_08.jpg");
+    background-position: right bottom 90px;
+}
+
+.priest > .deck-title {
+    background-image: url("/images/heroes/HERO_09.jpg");
+    background-position: right bottom 90px;
+}
+
 .deck-title {
     padding: 15px;
-    border-bottom: 1px solid;
+    color: white;
+    text-align: center;
+    font-size: 20px;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+    border: 1px solid rgb(22,26,58);
+    border-radius: 5px 5px 0 0;
 }
 
 /* .deck.paladin  {
@@ -89,26 +164,34 @@
 } */
 
 .deck-cards {
-    padding: 10px;
+    padding: 0;
 }
 
 .hs-card {
     display: flex;
-    padding: 5px;
+    padding: 0;
+    width: 240px;
+    height: 30px;
+    color: white;
+    text-align: center;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 .hs-card:hover {
     cursor: pointer;
-    border-bottom: 1px dashed grey;
-    border-top: 1px dashed grey;
 }
 
 .card-cost {
     width: 25px;
+    background-color: rgb(22,26,58);
     background-image: url("/images/mana_crystal.png");
     background-size: 25px 22.5px;
     background-repeat: no-repeat;
-    background-position: right top 1px;
+    background-position: right top 3px;
 }
 
 .card-container {
@@ -123,16 +206,15 @@
 
 .card-text {
     width: 180px;
+    flex: auto;
+    background: -moz-linear-gradient(45deg, rgba(22,26,58,1) 0%, rgba(15,18,41,1) 30%, rgba(0,0,0,0) 100%);
+    background: -webkit-linear-gradient(45deg, rgba(22,26,58,1) 0%,rgba(15,18,41,1) 30%,rgba(0,0,0,0) 100%);
+    background: linear-gradient(45deg, rgba(22,26,58,1) 0%,rgba(15,18,41,1) 30%,rgba(0,0,0,0) 100%);
 }
 
 .card-number {
     width: 15px;
-    text-align: right;
-}
-
-footer {
-    width: 100%;
-    padding: 50px;
+    background: rgb(22,26,58);
 }
 
 .row {

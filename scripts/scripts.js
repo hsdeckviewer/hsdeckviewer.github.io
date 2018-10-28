@@ -2,12 +2,13 @@ var deckstrings = require("deckstrings");
 var cards = {};
 var deckstringList = [];
 var URL_SHORTENER_KEY = "AIzaSyCrJtSoZVc42qqULzkefuxyZckc3CEJ598";
+var CARD_TILE_API = "/images/tiles/";
 var clipboard;
 
 $(function(){
     clipboard = new ClipboardJS('.btn');
 
-    $.getJSON('https://api.hearthstonejson.com/v1/latest/enUS/cards.json', function(data) {
+    $.getJSON('https://api.hearthstonejson.com/v1/latest/enUS/cards.collectible.json', function(data) {
         data.forEach(function(card) {
             cards[card["dbfId"]] = card;
         });
@@ -96,6 +97,13 @@ function updateButtonStates() {
     $("#removeButton").prop('disabled', isDisabled);
     $("#urlButton").prop('disabled', isDisabled);
     $("#copyButton").prop('disabled', isDisabled);
+    if (isDisabled) {
+        $("#shortURLForm").addClass('d-none');
+        $("#removeButtonContainer").addClass('d-none');
+    } else {
+        $("#shortURLForm").removeClass('d-none');
+        $("#removeButtonContainer").removeClass('d-none');
+    }
 }
 
 function createDeckFromString(deckstring) {
@@ -165,6 +173,8 @@ function createDeckElement(hero, cardlist, deckstring) {
     });
     cardlist.forEach(function(card) {
         var cardContainer = document.createElement("div");
+        var cardTileURL = CARD_TILE_API + cards[card[0]].id + ".png";
+        cardContainer.setAttribute("style", "background-image: url('" + cardTileURL + "');");
         cardContainer.classList.add("hs-card");
         cardContainer.setAttribute("data-toggle", "tooltip");
         cardContainer.setAttribute("title", "<img src='images/cards/" + card[0] + ".png'>");
@@ -194,7 +204,7 @@ function createDeckElement(hero, cardlist, deckstring) {
         cardsContainer.appendChild(cardContainer);
     });
     deckContainer.appendChild(titleContainer);
-    deckContainer.appendChild(buttonContainer);
     deckContainer.appendChild(cardsContainer);
+    deckContainer.appendChild(buttonContainer);
     return deckContainer;
 }

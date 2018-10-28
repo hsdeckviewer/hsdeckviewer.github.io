@@ -17,47 +17,47 @@
         <script src="scripts/bundle.js"></script>
     </head>
     <body>
-        <div id="content" class="container">
-            <div class="row">
+        <div id="header-section">
+            <div>
                 <div class="container title-container">
                     <h1>Hearthstone Deck Viewer</h1>
                 </div>
             </div>
 
-            <div id="deckstringForm" class="row">
+            <div id="deckstringForm">
                 <div class="input-group">
                     <input id="deckstring" name="deckstring" type="text" class="form-control" placeholder="Input deck code(s) here">
                     <div class="input-group-append">
-                        <button disabled id="addButton" class="btn btn-outline-dark" data-clipboard-target="#urlInput">Add Deck(s)</button>
+                        <button disabled id="addButton" class="btn btn-outline-light" data-clipboard-target="#urlInput">Add Deck(s)</button>
                     </div>
                 </div>
-                <small class="form-text text-muted mb-2">
-                    Separate multiple deck codes with whitespace or commas. Individual deck strings copied from the game client are also supported.
-                </small>
             </div>
+            <small class="form-text text-muted mb-2">
+                Separate multiple deck codes with whitespace or commas. Individual deck strings copied from the game client are also supported.
+            </small>
 
-            <div class="row">
+            <div id="shortURLForm" class="d-none">
                 <div class="input-group mx-auto" id="shortURLGroup">
                     <div class="input-group-prepend">
-                        <button disabled id="urlButton" class="btn btn-outline-dark">Generate Short URL</button>
+                        <button disabled id="urlButton" class="btn btn-outline-light">Generate Short URL</button>
                     </div>
                     <input id="urlInput" readonly class="form-control" type="text" name="url">
                     <div class="input-group-append">
-                        <button disabled id="copyButton" class="btn btn-outline-dark" data-clipboard-target="#urlInput">
+                        <button disabled id="copyButton" class="btn btn-outline-light" data-clipboard-target="#urlInput">
                             <img class="clippy" src="images/clippy.svg" alt="Copy to clipboard" width="13">
                         </button>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
+            <div id="removeButtonContainer" class="d-none">
                 <div class="container">
-                    <button disabled class="btn btn-outline-dark" id="removeButton">Remove All Decks</button>
-                </div>
-                <div id="decks" class="container deck-container">
+                    <button disabled class="btn btn-outline-light" id="removeButton">Remove All Decks</button>
                 </div>
             </div>
         </div>
-        <footer></footer>
+        <div id="deck-section">
+            <div id="decks" class="deck-container"></div>
+        </div>
     </body>
 </html>
