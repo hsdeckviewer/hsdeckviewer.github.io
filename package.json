@@ -21,6 +21,6 @@
     "postzip": "mv functions/shorturl/shorturl.zip functions-build",
     "prebuild": "npm run clean && npm run zip",
     "build": "browserify scripts/scripts.js -o public/js/bundle.js",
-    "run": "node server.js"
+    "run": "node mock-server.js"
   }
 }

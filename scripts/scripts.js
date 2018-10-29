@@ -38,6 +38,7 @@ $(function(){
     });
 
     $("#urlButton").click(function(){
+        $("#urlButton").prop("disabled", true);
         $.ajax({
             url: "/.netlify/functions/shorturl",
             type: "POST",
@@ -46,6 +47,7 @@ $(function(){
             dataType:"json",
             success: function(result){
                 $("#urlInput").val(result.shortURL);
+                $("#urlButton").prop("disabled", false);
             }
         });
     });
