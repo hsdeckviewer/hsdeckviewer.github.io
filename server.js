@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-app.post('/shorturl', (req, res) => {
+app.post('/.netlify/functions/shorturl', (req, res) => {
     let longURL = req.body.longUrl;
     request
         .post({

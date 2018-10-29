@@ -39,13 +39,13 @@ $(function(){
 
     $("#urlButton").click(function(){
         $.ajax({
-            url: "/shorturl",
+            url: "/.netlify/functions/shorturl",
             type: "POST",
-            data: JSON.stringify({"longUrl": location.href}),
+            data: JSON.stringify({longUrl: location.href}),
             contentType:"application/json; charset=utf-8",
             dataType:"json",
             success: function(result){
-                $("#urlInput").val(JSON.parse(result).shortURL);
+                $("#urlInput").val(result.shortURL);
             }
         });
     });

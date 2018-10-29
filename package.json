@@ -16,6 +16,11 @@
     "request": "^2.88.0"
   },
   "scripts": {
-    "build": "browserify scripts/scripts.js -o public/js/bundle.js && node server.js"
+    "clean": "rm -rf functions-build && mkdir functions-build",
+    "zip": "cd functions/shorturl && npm install && zip -r shorturl.zip *",
+    "postzip": "mv functions/shorturl/shorturl.zip functions-build",
+    "prebuild": "npm run clean && npm run zip",
+    "build": "browserify scripts/scripts.js -o public/js/bundle.js",
+    "run": "node server.js"
   }
 }
