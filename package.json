@@ -10,10 +10,11 @@
   "homepage": "https://hsdeckviewer.com",
   "author": "Oliver Fei",
   "dependencies": {
-    "deckstrings": "^2.0.0"
+    "deckstrings": "^2.0.0",
+    "express": "^4.16.4",
+    "request": "^2.88.0"
   },
-  "main": "index",
   "scripts": {
-    "build": "browserify scripts/scripts.js -o scripts/bundle.js && http-server"
+    "build": "browserify scripts/scripts.js -o public/js/bundle.js && node server.js"
   }
 }

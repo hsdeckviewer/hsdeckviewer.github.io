@@ -1,7 +1,6 @@
 var deckstrings = require("deckstrings");
 var cards = {};
 var deckstringList = [];
-var URL_SHORTENER_KEY = "AIzaSyCrJtSoZVc42qqULzkefuxyZckc3CEJ598";
 var CARD_TILE_API = "/images/tiles/";
 var clipboard;
 
@@ -40,13 +39,13 @@ $(function(){
 
     $("#urlButton").click(function(){
         $.ajax({
-            url: "https://www.googleapis.com/urlshortener/v1/url?key=" + URL_SHORTENER_KEY,
+            url: "/shorturl",
             type: "POST",
             data: JSON.stringify({"longUrl": location.href}),
             contentType:"application/json; charset=utf-8",
             dataType:"json",
             success: function(result){
-                $("#urlInput").val(result.id);
+                $("#urlInput").val(JSON.parse(result).shortURL);
             }
         });
     });
