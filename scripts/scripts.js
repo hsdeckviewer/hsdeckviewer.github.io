@@ -54,6 +54,10 @@ $(function(){
 
     $("#addButton").on("click", addInputedDecks);
 
+    $("#deckstring").on("change", (e) => {
+        $("#addButton").prop("disabled", $("#deckstring").val() == "");
+    });
+
     $("#deckstring").on("keyup", function(e){
         $("#addButton").prop("disabled", $("#deckstring").val() == "");
         if(e.keyCode === KeyboardEvent.DOM_VK_RETURN) {
