@@ -20,7 +20,7 @@
     "zip": "cd functions/shorturl && npm install && zip -r shorturl.zip *",
     "postzip": "mv functions/shorturl/shorturl.zip functions-build",
     "prebuild": "npm run clean && npm run zip",
-    "build": "browserify scripts/scripts.js -o public/js/bundle.js && ./sync.sh public/images/cards",
+    "build": "browserify scripts/scripts.js -o public/js/bundle.js",
     "run": "node mock-server.js"
   }
 }
