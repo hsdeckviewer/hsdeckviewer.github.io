@@ -86,7 +86,7 @@ async function downloadImages() {
     if (fs.existsSync(card_output_folder + card_dest)) {
       console.log("Checking hash...");
       // check if hash is the same
-      if (!(await checkHash(card_dest, value))) {
+      if (!(await checkHash(card_output_folder + card_dest, value))) {
         console.log("No hash match. Download card...");
         let card_image = [base, version, "rel", key + ".png"].join("/");
         await tryDownload(card_image, card_output_folder, card_dest);
