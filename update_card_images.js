@@ -14,13 +14,14 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function tryDownload(image, dest) {
+function tryDownload(image, destPath, destFile) {
   return new Promise(function(resolve, reject) {
     request({
       uri: image,
       encoding: "binary"
     }).then(function(res) {
-      fs.writeFileSync(dest, res.body);
+      fs.mkdirSync(destPath, { recursive: true });
+      fs.writeFileSync(destPath + destFile, res.body);
       console.log("Resolving download...");
       resolve();
     });
@@ -62,13 +63,11 @@ async function downloadImages() {
   console.log("Downloading card tiles...");
   for (let card of cards) {
     console.log(card);
-    let card_dest = tile_output_folder + card.id + ".png";
-    if (!fs.existsSync(card_dest)) {
+    let card_dest = card.id + ".png";
+    if (!fs.existsSync(tile_output_folder + card_dest)) {
       console.log(card_dest);
       let card_tile = TILE_API + card.id + ".png";
-      await tryDownload(card_tile, card_dest);
-      console.log("sleeping...");
-      await sleep(1000);
+      await tryDownload(card_tile, tile_output_folder, card_dest);
     }
   }
 
@@ -79,20 +78,20 @@ async function downloadImages() {
   const version = cardImages.config.version;
   const base = cardImages.config.base;
   for (let [key, value] of Object.entries(cardImages.cards)) {
-    let card_dest = card_output_folder + key + ".png";
-    if (fs.existsSync(card_dest)) {
+    let card_dest = key + ".png";
+    if (fs.existsSync(card_output_folder + card_dest)) {
       console.log("Checking hash...");
       // check if hash is the same
       if (!(await checkHash(card_dest, value))) {
         console.log("No hash match. Download card...");
         let card_image = [base, version, "rel", key + ".png"].join("/");
-        await tryDownload(card_image, card_dest);
+        await tryDownload(card_image, card_output_folder, card_dest);
       }
     } else {
       // download the card
       console.log(card_dest);
       let card_image = [base, version, "rel", key + ".png"].join("/");
-      await tryDownload(card_image, card_dest);
+      await tryDownload(card_image, card_output_folder, card_dest);
     }
   }
 }
