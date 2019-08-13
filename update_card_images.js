@@ -20,7 +20,6 @@ function tryDownload(image, destPath, destFile) {
       uri: image,
       encoding: "binary"
     }).then(function(res) {
-      fs.mkdirSync(destPath, { recursive: true });
       fs.writeFileSync(destPath + destFile, res.body);
       console.log("Resolving download...");
       resolve();
@@ -56,6 +55,11 @@ function downloadJson(uri) {
 }
 
 async function downloadImages() {
+  if (!fs.existsSync(card_output_folder)) {
+    fs.mkdirSync(card_output_folder, { recursive: true });
+    fs.mkdirSync(tile_output_folder, { recursive: true });
+  }
+
   // download card tiles
   console.log("Fetching cards...");
   let cards = await downloadJson(CARDS_JSON_URL);
