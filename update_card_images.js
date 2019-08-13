@@ -1,4 +1,4 @@
-const request = require("request");
+const request = require("request-promise-native");
 const fs = require("fs");
 const crypto = require("crypto");
 
@@ -10,66 +10,91 @@ const CARDS_JSON_URL =
 const tile_output_folder = "public/images/tiles/";
 const card_output_folder = "public/images/cards/";
 
-let timeout = 100;
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-// download card tiles
-request(
-  {
-    url: CARDS_JSON_URL,
-    json: true
-  },
-  function(error, response, body) {
-    for (let card of body) {
-      let card_dest = tile_output_folder + card.id + ".png";
-      if (!fs.existsSync(card_dest)) {
-        setTimeout(() => {
-          console.log(card_dest);
-          let card_tile = TILE_API + card.id + ".png";
-          request(card_tile).pipe(fs.createWriteStream(card_dest));
-          timeout += 50;
-        }, timeout);
-      }
+function tryDownload(image, dest) {
+  return new Promise(function(resolve, reject) {
+    request({
+      uri: image,
+      encoding: "binary"
+    }).then(function(res) {
+      fs.writeFileSync(dest, res.body);
+      console.log("Resolving download...");
+      resolve();
+    });
+  });
+}
+
+function checkHash(card_dest, value) {
+  return new Promise(function(resolve, reject) {
+    fs.createReadStream(card_dest)
+      .pipe(crypto.createHash("sha1").setEncoding("base64"))
+      .on("finish", function() {
+        let hash = this.read();
+        if (hash.substring(0, 5) !== value) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+  });
+}
+
+function downloadJson(uri) {
+  return new Promise(function(resolve, reject) {
+    request({
+      uri: uri,
+      json: true
+    }).then(body => {
+      console.log("Resolving json request...");
+      resolve(body);
+    });
+  });
+}
+
+async function downloadImages() {
+  // download card tiles
+  console.log("Fetching cards...");
+  let cards = await downloadJson(CARDS_JSON_URL);
+
+  console.log("Downloading card tiles...");
+  for (let card of cards) {
+    console.log(card);
+    let card_dest = tile_output_folder + card.id + ".png";
+    if (!fs.existsSync(card_dest)) {
+      console.log(card_dest);
+      let card_tile = TILE_API + card.id + ".png";
+      await tryDownload(card_tile, card_dest);
+      console.log("sleeping...");
+      await sleep(1000);
     }
   }
-);
 
-// download card images
-request(
-  {
-    url: CARD_IMAGE_JSON_URL,
-    json: true
-  },
-  (err, res, body) => {
-    const version = body.config.version;
-    const base = body.config.base;
-    Object.entries(body.cards).forEach(([key, value]) => {
-      let card_dest = card_output_folder + key + ".png";
-      if (fs.existsSync(card_dest)) {
-        // check if hash is the same
-        fs.createReadStream(card_dest)
-          .pipe(crypto.createHash("sha1").setEncoding("base64"))
-          .on("finish", function() {
-            let hash = this.read();
-            if (hash.substring(0, 5) !== value) {
-              console.log(hash + " - " + value);
-              // download the card
-              setTimeout(() => {
-                console.log(card_dest);
-                let card_image = [base, version, "rel", key + ".png"].join("/");
-                request(card_image).pipe(fs.createWriteStream(card_dest));
-                timeout += 50;
-              }, timeout);
-            }
-          });
-      } else {
-        // download the card
-        setTimeout(() => {
-          console.log(card_dest);
-          let card_image = [base, version, "rel", key + ".png"].join("/");
-          request(card_image).pipe(fs.createWriteStream(card_dest));
-          timeout += 50;
-        }, timeout);
+  console.log("Getting manifest...");
+  // download card images
+  let cardImages = await downloadJson(CARD_IMAGE_JSON_URL);
+
+  const version = cardImages.config.version;
+  const base = cardImages.config.base;
+  for (let [key, value] of Object.entries(cardImages.cards)) {
+    let card_dest = card_output_folder + key + ".png";
+    if (fs.existsSync(card_dest)) {
+      console.log("Checking hash...");
+      // check if hash is the same
+      if (!(await checkHash(card_dest, value))) {
+        console.log("No hash match. Download card...");
+        let card_image = [base, version, "rel", key + ".png"].join("/");
+        await tryDownload(card_image, card_dest);
       }
-    });
+    } else {
+      // download the card
+      console.log(card_dest);
+      let card_image = [base, version, "rel", key + ".png"].join("/");
+      await tryDownload(card_image, card_dest);
+    }
   }
-);
+}
+
+downloadImages();
