@@ -1,10 +1,9 @@
 const request = require("request-promise-native");
 const fs = require("fs");
-const crypto = require("crypto");
 
 const TILE_API = "https://art.hearthstonejson.com/v1/tiles/";
-const CARD_IMAGE_JSON_URL =
-  "https://raw.githubusercontent.com/schmich/hearthstone-card-images/master/manifest/en_US.json";
+const CARD_RENDER_API =
+  "https://art.hearthstonejson.com/v1/render/latest/enUS/256x/";
 const CARDS_JSON_URL =
   "https://api.hearthstonejson.com/v1/latest/enUS/cards.collectible.json";
 const tile_output_folder = "public/images/tiles/";
@@ -16,27 +15,17 @@ function sleep(ms) {
 
 function tryDownload(image, destPath, destFile) {
   return new Promise(function(resolve, reject) {
-    request(image)
-      .pipe(fs.createWriteStream(destPath + destFile))
-      .on("finish", () => {
-        console.log("finsihed downloading");
-        resolve();
-      });
-  });
-}
-
-function checkHash(card_dest, value) {
-  return new Promise(function(resolve, reject) {
-    fs.createReadStream(card_dest)
-      .pipe(crypto.createHash("sha1").setEncoding("base64"))
-      .on("finish", function() {
-        let hash = this.read();
-        if (hash.substring(0, 5) !== value) {
+    try {
+      request(image)
+        .pipe(fs.createWriteStream(destPath + destFile))
+        .on("finish", () => {
+          console.log("finished downloading");
           resolve(true);
-        } else {
-          resolve(false);
-        }
-      });
+        });
+    } catch (e) {
+      console.log("failed downloading");
+      resolve(false);
+    }
   });
 }
 
@@ -62,37 +51,36 @@ async function downloadImages() {
   console.log("Fetching cards...");
   let cards = await downloadJson(CARDS_JSON_URL);
 
-  console.log("Downloading card tiles...");
+  console.log("Downloading card images...");
   for (let card of cards) {
     console.log(card);
     let card_dest = card.id + ".png";
     if (!fs.existsSync(tile_output_folder + card_dest)) {
       console.log(card_dest);
-      let card_tile = TILE_API + card.id + ".png";
-      await tryDownload(card_tile, tile_output_folder, card_dest);
-    }
-  }
-
-  console.log("Getting manifest...");
-  // download card images
-  let cardImages = await downloadJson(CARD_IMAGE_JSON_URL);
-
-  const locale = cardImages.config.locale;
-  const base = cardImages.config.base + "/master/cards";
-  for (let [key, value] of Object.entries(cardImages.cards)) {
-    let card_dest = key + ".png";
-    if (fs.existsSync(card_output_folder + card_dest)) {
-      console.log("Checking hash...");
-      // check if hash is the same
-      if (!(await checkHash(card_output_folder + card_dest, value))) {
-        console.log("No hash match. Download card...");
-        let card_image = [base, locale, key + ".png"].join("/");
-        await tryDownload(card_image, card_output_folder, card_dest);
+      let card_tile = TILE_API + card_dest;
+      for (let i = 0; i < 3; i++) {
+        let success = await tryDownload(
+          card_tile,
+          tile_output_folder,
+          card_dest
+        );
+        if (success) {
+          break;
+        }
+        await sleep(1000);
       }
-    } else {
-      // download the card
-      let card_image = [base, locale, key + ".png"].join("/");
-      await tryDownload(card_image, card_output_folder, card_dest);
+    }
+    let card_image = CARD_RENDER_API + card_dest;
+    for (let i = 0; i < 3; i++) {
+      let success = await tryDownload(
+        card_image,
+        card_output_folder,
+        card_dest
+      );
+      if (success) {
+        break;
+      }
+      await sleep(1000);
     }
   }
 }
