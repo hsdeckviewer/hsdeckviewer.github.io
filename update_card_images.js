@@ -67,7 +67,7 @@ async function downloadImages() {
         if (success) {
           break;
         }
-        await sleep(1000);
+        await sleep(500);
       }
     }
     let card_image = CARD_RENDER_API + card_dest;
@@ -80,7 +80,7 @@ async function downloadImages() {
       if (success) {
         break;
       }
-      await sleep(1000);
+      await sleep(500);
     }
   }
 }
