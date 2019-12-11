@@ -21,6 +21,9 @@ function tryDownload(image, destPath, destFile) {
         .on("finish", () => {
           console.log("finished downloading");
           resolve(true);
+        })
+        .catch(() => {
+          resolve(false);
         });
     } catch (e) {
       console.log("failed downloading");
@@ -69,6 +72,10 @@ async function downloadImages() {
         }
         await sleep(500);
       }
+    }
+    if (fs.existsSync(card_output_folder + card_dest)) {
+      console.log(card_dest + " already exists");
+      continue;
     }
     let card_image = CARD_RENDER_API + card_dest;
     for (let i = 0; i < 3; i++) {
