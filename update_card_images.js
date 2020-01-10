@@ -9,6 +9,8 @@ const CARDS_JSON_URL =
 const tile_output_folder = "public/images/tiles/";
 const card_output_folder = "public/images/cards/";
 
+const BASE_CARDS_JSON = "./base_image_version.json";
+
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -19,14 +21,12 @@ function tryDownload(image, destPath, destFile) {
       request(image)
         .pipe(fs.createWriteStream(destPath + destFile))
         .on("finish", () => {
-          console.log("finished downloading");
           resolve(true);
         })
         .catch(() => {
           resolve(false);
         });
     } catch (e) {
-      console.log("failed downloading");
       resolve(false);
     }
   });
@@ -45,7 +45,9 @@ function downloadJson(uri) {
 }
 
 async function downloadImages() {
+  let firstDownload = false;
   if (!fs.existsSync(card_output_folder)) {
+    firstDownload = true;
     fs.mkdirSync(card_output_folder, { recursive: true });
     fs.mkdirSync(tile_output_folder, { recursive: true });
   }
@@ -54,29 +56,32 @@ async function downloadImages() {
   console.log("Fetching cards...");
   let cards = await downloadJson(CARDS_JSON_URL);
 
+  if (!firstDownload) {
+    console.log("Finding new or updated cards...");
+    const base_cards_dict = {};
+    let base_cards = JSON.parse(fs.readFileSync(BASE_CARDS_JSON, "utf8"));
+    base_cards.forEach(card => (base_cards_dict[card.id] = card));
+    cards = cards.filter(
+      card =>
+        base_cards_dict[card.id] == null ||
+        JSON.stringify(base_cards_dict[card.id]) != JSON.stringify(card)
+    );
+    console.log(cards.map(card => card.id));
+  }
+
   console.log("Downloading card images...");
   for (let card of cards) {
-    console.log(card);
     let card_dest = card.id + ".png";
-    if (!fs.existsSync(tile_output_folder + card_dest)) {
-      console.log(card_dest);
-      let card_tile = TILE_API + card_dest;
-      for (let i = 0; i < 3; i++) {
-        let success = await tryDownload(
-          card_tile,
-          tile_output_folder,
-          card_dest
-        );
-        if (success) {
-          break;
-        }
-        await sleep(500);
+    console.log(card_dest);
+    let card_tile = TILE_API + card_dest;
+    for (let i = 0; i < 3; i++) {
+      let success = await tryDownload(card_tile, tile_output_folder, card_dest);
+      if (success) {
+        break;
       }
+      await sleep((2 << i) * 100);
     }
-    if (fs.existsSync(card_output_folder + card_dest)) {
-      console.log(card_dest + " already exists");
-      continue;
-    }
+
     let card_image = CARD_RENDER_API + card_dest;
     for (let i = 0; i < 3; i++) {
       let success = await tryDownload(
@@ -87,7 +92,7 @@ async function downloadImages() {
       if (success) {
         break;
       }
-      await sleep(500);
+      await sleep((2 << i) * 100);
     }
   }
 }
