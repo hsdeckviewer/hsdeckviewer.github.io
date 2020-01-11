@@ -60,6 +60,8 @@ async function downloadImages() {
     console.log("Finding new or updated cards...");
     const base_cards_dict = {};
     let base_cards = JSON.parse(fs.readFileSync(BASE_CARDS_JSON, "utf8"));
+    console.log("Updating base cards json...");
+    fs.writeFileSync(BASE_CARDS_JSON, JSON.stringify(cards), "utf8");
     base_cards.forEach(card => (base_cards_dict[card.id] = card));
     cards = cards.filter(
       card =>
