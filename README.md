@@ -14,3 +14,8 @@ Install http-server: `<npm install http-server -g>`
 Install dependancies: `<npm install>`
 
 Run `<npm run build>` to build bundle.js from the scripts.js file and start http-server
+
+## Support
+If you want to help pay for costs of maintaining the website:
+
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/L4L61HUGS)
