@@ -68,47 +68,42 @@ body {
 
 .warrior > .deck-title {
     background-image: url("/images/heroes/HERO_01.jpg");
-    background-position: right bottom 90px;
 }
 
 .shaman > .deck-title {
     background-image: url("/images/heroes/HERO_02.jpg");
-    background-position: right bottom 90px;
 }
 
 .rogue > .deck-title {
     background-image: url("/images/heroes/HERO_03.jpg");
-    background-position: right bottom 90px;
 }
 
 .paladin > .deck-title {
     background-image: url("/images/heroes/HERO_04.jpg");
-    background-position: right bottom 90px;
 }
 
 .hunter > .deck-title {
     background-image: url("/images/heroes/HERO_05.jpg");
-    background-position: right bottom 90px;
 }
 
 .druid > .deck-title {
     background-image: url("/images/heroes/HERO_06.jpg");
-    background-position: right bottom 90px;
 }
 
 .warlock > .deck-title {
     background-image: url("/images/heroes/HERO_07.jpg");
-    background-position: right bottom 90px;
 }
 
 .mage > .deck-title {
     background-image: url("/images/heroes/HERO_08.jpg");
-    background-position: right bottom 90px;
 }
 
 .priest > .deck-title {
     background-image: url("/images/heroes/HERO_09.jpg");
-    background-position: right bottom 90px;
+}
+
+.demonhunter > .deck-title {
+    background-image: url("/images/heroes/HERO_10.jpg");
 }
 
 .deck-title {
@@ -123,6 +118,7 @@ body {
     1px 1px 0 #000;
     border: 1px solid rgb(22,26,58);
     border-radius: 5px 5px 0 0;
+    background-position: right bottom 90px;
 }
 
 /* .deck.paladin  {
