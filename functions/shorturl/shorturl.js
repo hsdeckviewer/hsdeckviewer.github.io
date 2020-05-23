@@ -3,6 +3,7 @@ const fetch = require("node-fetch");
 
 const SHORTURLKEY = process.env.SHORTURLKEY;
 const SHORTURLAPI = process.env.SHORTURLAPI;
+const CUSTOMDOMAIN = process.env.CUSTOMDOMAIN;
 
 exports.handler = async (event, context) => {
   // Only allow POST
@@ -23,7 +24,7 @@ exports.handler = async (event, context) => {
       "X-API-Key": SHORTURLKEY
     },
     method: "POST",
-    body: JSON.stringify({target: longUrl, reuse: true})
+    body: JSON.stringify({target: longUrl, reuse: true, domain: CUSTOMDOMAIN})
   }).then(res => res.json())
     .then(json => ({
       statusCode: 200,
