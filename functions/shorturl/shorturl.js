@@ -31,6 +31,6 @@ exports.handler = async (event, context) => {
       headers: {
         "content-type": "application/json"
       },
-      body: JSON.stringify({shortURL: json.shortUrl})
+      body: JSON.stringify({shortURL: json.link})
     }));
 };
