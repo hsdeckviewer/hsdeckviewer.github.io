@@ -55,6 +55,7 @@ body {
 
 .deck {
     margin: 10px;
+    width: 240px;
 }
 .deck-buttons {
     padding: 10px;
@@ -164,7 +165,6 @@ body {
 .hs-card {
     display: flex;
     padding: 0;
-    width: 240px;
     height: 30px;
     color: white;
     text-align: center;
