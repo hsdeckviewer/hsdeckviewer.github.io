@@ -76,20 +76,20 @@ function parseDeckcodeFromString(deckstring) {
 }
 
 function addInputedDecks() {
+  const input = $("#deckstring").val();
   if (
-    $("#deckstring")
-      .val()
-      .indexOf("deck in Hearthstone") != -1
+    input.indexOf("deck in Hearthstone") != -1
   ) {
-    var deckcode = parseDeckcodeFromString($("#deckstring").val());
-    $("#deckstring").val(deckcode);
+    var deckcode = input.match(new RegExp('(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)', 'g'));
+    var title = input.split("#").filter(str => str != '')[0].trim();
+    createDeckFromString(deckcode, title);
+  } else {
+    var deckstring = input.split(/,\s*|\s+/);
+    deckstring.forEach(function(deck) {
+      createDeckFromString(deck);
+    });
   }
-  var deckstring = $("#deckstring")
-    .val()
-    .split(/,\s*|\s+/);
-  deckstring.forEach(function(deck) {
-    createDeckFromString(deck);
-  });
+  
   $("#deckstring").val("");
 }
 
@@ -120,22 +120,26 @@ function updateButtonStates() {
   }
 }
 
-function createDeckFromString(deckstring) {
+function createDeckFromString(deckstring, title = null) {
   var deck = deckstrings.decode(deckstring);
   deckstringList.push(encodeURIComponent(deckstring));
-  var deckElement = createDeckElement(deck.heroes[0], deck.cards, deckstring);
+  var deckElement = createDeckElement(deck.heroes[0], deck.cards, deckstring, title);
   $("#decks")[0].appendChild(deckElement);
   update();
 }
 
-function createDeckElement(hero, cardlist, deckstring) {
+function createDeckElement(hero, cardlist, deckstring, title) {
   var deckContainer = document.createElement("div");
   deckContainer.classList.add(cards[hero].cardClass.toLowerCase());
   deckContainer.classList.add("deck");
 
   var titleContainer = document.createElement("div");
   titleContainer.classList.add("deck-title");
-  titleContainer.appendChild(document.createTextNode(cards[hero].cardClass));
+  var deckTitle = title;
+  if (deckTitle == null) {
+    deckTitle = cards[hero].cardClass
+  }
+  titleContainer.appendChild(document.createTextNode(deckTitle));
 
   var buttonContainer = document.createElement("div");
   buttonContainer.classList.add("deck-buttons");
