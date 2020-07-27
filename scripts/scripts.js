@@ -80,7 +80,7 @@ function addInputedDecks() {
   if (
     input.indexOf("deck in Hearthstone") != -1
   ) {
-    var deckcode = input.split("\n").filter(str => str.trim().charAt[0] != "#")[0].trim(); 
+    var deckcode = input.split(" ").sort((a,b) => b.length - a.length)[0].trim();
     var title = input.split("#").filter(str => str != '')[0].trim();
     createDeckFromString(deckcode, title);
   } else {
