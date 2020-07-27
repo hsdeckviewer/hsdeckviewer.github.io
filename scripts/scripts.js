@@ -80,7 +80,7 @@ function addInputedDecks() {
   if (
     input.indexOf("deck in Hearthstone") != -1
   ) {
-    var deckcode = input.match(new RegExp('(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)', 'g'));
+    var deckcode = input.split("\n").filter(str => str.trim().charAt[0] != "#")[0].trim(); 
     var title = input.split("#").filter(str => str != '')[0].trim();
     createDeckFromString(deckcode, title);
   } else {
