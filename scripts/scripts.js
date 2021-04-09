@@ -60,6 +60,10 @@ $(function() {
   $("#deckstring").on("change", e => {
     $("#addButton").prop("disabled", $("#deckstring").val() == "");
   });
+  
+  $("#deckstring").on("input", e => {
+    $("#addButton").prop("disabled", $("#deckstring").val() == "");
+  });
 
   $("#deckstring").on("keyup", function(e) {
     $("#addButton").prop("disabled", $("#deckstring").val() == "");
