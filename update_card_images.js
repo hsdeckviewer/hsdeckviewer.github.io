@@ -6,8 +6,8 @@ const CARD_RENDER_API =
   "https://art.hearthstonejson.com/v1/render/latest/enUS/256x/";
 const CARDS_JSON_URL =
   "https://api.hearthstonejson.com/v1/latest/enUS/cards.collectible.json";
-const tile_output_folder = "public/images/tiles/";
-const card_output_folder = "public/images/cards/";
+const tile_output_folder = "docs/images/tiles/";
+const card_output_folder = "docs/images/cards/";
 
 const BASE_CARDS_JSON = "./base_image_version.json";
 
