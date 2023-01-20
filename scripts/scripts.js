@@ -43,7 +43,7 @@ $(function() {
   $("#urlButton").click(function() {
     $("#urlButton").prop("disabled", true);
     $.ajax({
-      url: "/.netlify/functions/shorturl",
+      url: "https://confident-bohr-23f57f.netlify.app/.netlify/functions/shorturl",
       type: "POST",
       data: JSON.stringify({ longUrl: location.href }),
       contentType: "application/json; charset=utf-8",
